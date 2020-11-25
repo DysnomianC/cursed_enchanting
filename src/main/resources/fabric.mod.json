@@ -14,12 +14,12 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/cursed_enchanting/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.dysnomian.cursed_enchanting"
+      "net.dysnomian.cursed_enchanting.CursedEnchanting"
     ]
   },
   "mixins": [
