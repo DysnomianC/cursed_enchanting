@@ -1,17 +1,9 @@
 package net.dysnomian.cursed_enchanting;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class CursedEnchanting implements ModInitializer {
-	public static final ItemGroup CE_GROUP = FabricItemGroupBuilder.create(
-		new Identifier("tutorial", "example"))
-		.icon(() -> new ItemStack(CursedEnchantingTableBlock.INSTANCE))
-		.build();
 	
 	@Override
 	public void onInitialize() {
