@@ -1,9 +1,10 @@
 {
+	"parent": "block/block",
 	"textures": {
-		"particle": "cursed_enchanting:block/cursed_enchanting_table_bottom",
 		"top": "cursed_enchanting:block/cursed_enchanting_table_top",
 		"side": "cursed_enchanting:block/cursed_enchanting_table_side",
-		"bottom": "cursed_enchanting:block/cursed_enchanting_table_bottom"
+		"bottom": "cursed_enchanting:block/cursed_enchanting_table_bottom",
+		"particle": "#side"
 	},
 	"elements": [{
 		"from": [ 0, 0, 0 ],
