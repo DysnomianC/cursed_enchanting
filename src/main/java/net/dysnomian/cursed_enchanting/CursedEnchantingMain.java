@@ -3,7 +3,7 @@ package net.dysnomian.cursed_enchanting;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.registry.Registry;
 
-public class CursedEnchanting implements ModInitializer {
+public class CursedEnchantingMain implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
@@ -15,5 +15,6 @@ public class CursedEnchanting implements ModInitializer {
 
 		Registry.register(Registry.BLOCK, CursedEnchantingTableBlock.ID, CursedEnchantingTableBlock.INSTANCE);
 		Registry.register(Registry.ITEM, CursedEnchantingTableBlock.ID, CursedEnchantingTableBlock.INSTANCE_ITEM);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, CursedEnchantingTableBlockEntity.ID, CursedEnchantingTableBlockEntity.BLOCK_ENTITY_TYPE);
 	}
 }
