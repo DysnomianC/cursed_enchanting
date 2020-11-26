@@ -1,5 +1,6 @@
 package net.dysnomian.cursed_enchanting;
 
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -30,11 +31,12 @@ public class TableBlock extends Block implements BlockEntityProvider {
 		.requiresTool()
 		.sounds(BlockSoundGroup.STONE)
 		.strength(3.5f);
+	private static final FabricItemSettings tableItemSettings = new FabricItemSettings().group(ItemGroup.DECORATIONS);
 	private static final VoxelShape SHAPE = Block.createCuboidShape(0D, 0D, 0D, 16D, 12D, 16D);
 		
 	public static final Identifier ID = new Identifier("cursed_enchanting", "cursed_enchanting_table");
 	public static final TableBlock INSTANCE = new TableBlock(tableSettings);
-	public static final BlockItem INSTANCE_ITEM = new BlockItem(TableBlock.INSTANCE, new Item.Settings().group(ItemGroup.DECORATIONS));
+	public static final BlockItem INSTANCE_ITEM = new BlockItem(TableBlock.INSTANCE, tableItemSettings);
 
 	public TableBlock(FabricBlockSettings settings) {
 		super(settings);

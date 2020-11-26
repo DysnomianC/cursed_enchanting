@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+	  " B ",
+	  "GPG",
+	  "PPP"
+	],
+	"key": {
+	  "B": {
+		"item": "minecraft:book"
+	  },
+	  "G": {
+		"item": "minecraft:gold_ingot"
+	  },
+	  "P": {
+		"item": "minecraft:polished_granite"
+	  }
+	},
+	"result": {
+	  "item": "cursed_enchanting:cursed_enchanting_table"
+	}
+  }
+
