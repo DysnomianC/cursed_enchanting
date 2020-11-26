@@ -79,14 +79,14 @@ public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEnti
 		  matrixStack.translate(0.0D, (double)(0.1F + MathHelper.sin(g * 0.1F) * 0.01F), 0.0D);
 	
 		  float h;
-		  for(h = tableBlockEntity.field_11964 - tableBlockEntity.field_11963; h >= 3.1415927F; h -= 6.2831855F) {
+		  for(h = tableBlockEntity.nextAngularOffset - tableBlockEntity.angularOffset; h >= 3.1415927F; h -= 6.2831855F) {
 		  }
 	
 		  while(h < -3.1415927F) {
 			 h += 6.2831855F;
 		  }
 	
-		  float k = tableBlockEntity.field_11963 + h * f;
+		  float k = tableBlockEntity.angularOffset + h * f;
 		  matrixStack.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(-k));
 		  matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(80.0F));
 		  float l = MathHelper.lerp(f, tableBlockEntity.pageAngle, tableBlockEntity.nextPageAngle);
@@ -101,5 +101,6 @@ public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEnti
 	
 	   static {
 		  BOOK_TEXTURE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("entity/enchanting_table_book"));
+		  // "cursed_enchanting:entity/cursed_enchanting_table_book" doesn't work *sadface*
 	   }
 }

@@ -34,7 +34,7 @@ public class TableBlockEntity extends BlockEntity implements ImplementedInventor
       super(BLOCK_ENTITY_TYPE);
    }
 
-   // fields and tick method copied from minecraft's `EnchantingTableBlockEntity`, used 
+   // fields and tick method copied from minecraft's `EnchantingTableBlockEntity`, used bt the entity renderer to render the fancy book
    public int ticks;
    public float nextPageAngle;
    public float pageAngle;
@@ -42,17 +42,18 @@ public class TableBlockEntity extends BlockEntity implements ImplementedInventor
    public float field_11967;
    public float nextPageTurningSpeed;
    public float pageTurningSpeed;
-   public float field_11964;
-   public float field_11963;
-   public float field_11962;
+   public float nextAngularOffset;
+   public float angularOffset;
+   public float angularPosition;
+
    public void tick() {
       this.pageTurningSpeed = this.nextPageTurningSpeed;
-      this.field_11963 = this.field_11964;
+      this.angularOffset = this.nextAngularOffset;
       PlayerEntity playerEntity = this.world.getClosestPlayer((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D, 3.0D, false);
       if (playerEntity != null) {
-         double d = playerEntity.getX() - ((double)this.pos.getX() + 0.5D);
-         double e = playerEntity.getZ() - ((double)this.pos.getZ() + 0.5D);
-         this.field_11962 = (float)MathHelper.atan2(e, d);
+         double xDiff = playerEntity.getX() - ((double)this.pos.getX() + 0.5D);
+         double zDiff = playerEntity.getZ() - ((double)this.pos.getZ() + 0.5D);
+         this.angularPosition = (float)MathHelper.atan2(zDiff, xDiff); // angle the book towards the player
          this.nextPageTurningSpeed += 0.1F;
          if (this.nextPageTurningSpeed < 0.5F || RANDOM.nextInt(40) == 0) {
             float f = this.field_11969;
@@ -62,40 +63,39 @@ public class TableBlockEntity extends BlockEntity implements ImplementedInventor
             } while(f == this.field_11969);
          }
       } else {
-         this.field_11962 += 0.02F;
+         this.angularPosition += 0.02F;
          this.nextPageTurningSpeed -= 0.1F;
       }
 
-      while(this.field_11964 >= 3.1415927F) {
-         this.field_11964 -= 6.2831855F;
+      while(this.nextAngularOffset >= 3.1415927F) {
+         this.nextAngularOffset -= 6.2831855F;
       }
 
-      while(this.field_11964 < -3.1415927F) {
-         this.field_11964 += 6.2831855F;
+      while(this.nextAngularOffset < -3.1415927F) {
+         this.nextAngularOffset += 6.2831855F;
       }
 
-      while(this.field_11962 >= 3.1415927F) {
-         this.field_11962 -= 6.2831855F;
+      while(this.angularPosition >= 3.1415927F) {
+         this.angularPosition -= 6.2831855F;
       }
 
-      while(this.field_11962 < -3.1415927F) {
-         this.field_11962 += 6.2831855F;
+      while(this.angularPosition < -3.1415927F) {
+         this.angularPosition += 6.2831855F;
       }
 
       float g;
-      for(g = this.field_11962 - this.field_11964; g >= 3.1415927F; g -= 6.2831855F) {
+      for(g = this.angularPosition - this.nextAngularOffset; g >= 3.1415927F; g -= 6.2831855F) {
       }
 
       while(g < -3.1415927F) {
          g += 6.2831855F;
       }
 
-      this.field_11964 += g * 0.4F;
+      this.nextAngularOffset += g * 0.4F;
       this.nextPageTurningSpeed = MathHelper.clamp(this.nextPageTurningSpeed, 0.0F, 1.0F);
       ++this.ticks;
       this.pageAngle = this.nextPageAngle;
       float h = (this.field_11969 - this.nextPageAngle) * 0.4F;
-      float i = 0.2F;
       h = MathHelper.clamp(h, -0.2F, 0.2F);
       this.field_11967 += (h - this.field_11967) * 0.9F;
       this.nextPageAngle += this.field_11967;
