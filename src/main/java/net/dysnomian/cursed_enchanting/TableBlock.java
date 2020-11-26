@@ -1,5 +1,7 @@
 package net.dysnomian.cursed_enchanting;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -11,7 +13,6 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -21,6 +22,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.sound.BlockSoundGroup;
 
 public class TableBlock extends Block implements BlockEntityProvider {
@@ -51,7 +53,13 @@ public class TableBlock extends Block implements BlockEntityProvider {
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
 		return SHAPE;
 	}
-
+	
+	@Nullable
+	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
+	   BlockEntity blockEntity = world.getBlockEntity(pos);
+	   return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory)blockEntity : null;
+	}
+	
 	@Override
 	public ActionResult onUse(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
 		if (world.isClient) return ActionResult.SUCCESS;

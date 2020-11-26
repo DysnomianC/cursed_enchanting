@@ -15,9 +15,7 @@ public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEnti
 
 	private static ItemStack bookStack = new ItemStack(Items.BOOK, 1);
 
-	private static net.minecraft.block.EnchantingTableBlock enchantingTable = (net.minecraft.block.EnchantingTableBlock)net.minecraft.block.Blocks.ENCHANTING_TABLE;
- 
-    public TableBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
+	public TableBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
  
