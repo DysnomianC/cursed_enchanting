@@ -19,7 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.dysnomian.cursed_enchanting.CursedEnchanting"
+      "net.dysnomian.cursed_enchanting.CursedEnchantingMain"
+    ],
+    "client": [
+      "net.dysnomian.cursed_enchanting.CursedEnchantingClient"
     ]
   },
   "mixins": [

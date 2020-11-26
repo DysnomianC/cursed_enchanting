@@ -11,16 +11,16 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-public class CursedEnchantingTableBlockEntityRenderer extends BlockEntityRenderer<CursedEnchantingTableBlockEntity> {
+public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEntity> {
 
 	private static ItemStack bookStack = new ItemStack(Items.BOOK, 1);
  
-    public CursedEnchantingTableBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
+    public TableBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
  
     @Override
-	public void render(CursedEnchantingTableBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void render(TableBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		matrices.push();
 		
 		final double time = blockEntity.getWorld().getTime() + tickDelta;

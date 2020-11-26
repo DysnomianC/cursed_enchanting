@@ -13,8 +13,8 @@ public class CursedEnchantingMain implements ModInitializer {
 
 		System.out.println("Hello Fabric world!");
 
-		Registry.register(Registry.BLOCK, CursedEnchantingTableBlock.ID, CursedEnchantingTableBlock.INSTANCE);
-		Registry.register(Registry.ITEM, CursedEnchantingTableBlock.ID, CursedEnchantingTableBlock.INSTANCE_ITEM);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, CursedEnchantingTableBlockEntity.ID, CursedEnchantingTableBlockEntity.BLOCK_ENTITY_TYPE);
+		Registry.register(Registry.BLOCK, TableBlock.ID, TableBlock.INSTANCE);
+		Registry.register(Registry.ITEM, TableBlock.ID, TableBlock.INSTANCE_ITEM);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, TableBlockEntity.ID, TableBlockEntity.BLOCK_ENTITY_TYPE);
 	}
 }
