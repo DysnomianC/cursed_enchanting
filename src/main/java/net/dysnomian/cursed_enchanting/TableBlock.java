@@ -22,8 +22,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.text.Text;
 
 public class TableBlock extends Block implements BlockEntityProvider {
 	// strength() sets blast resistance and hardness.
@@ -57,7 +61,16 @@ public class TableBlock extends Block implements BlockEntityProvider {
 	@Nullable
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
 	   BlockEntity blockEntity = world.getBlockEntity(pos);
-	   return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory)blockEntity : null;
+//	   return blockEntity instanceof NamedScreenHandlerFactory ? (NamedScreenHandlerFactory)blockEntity : null;
+
+		if (blockEntity instanceof TableBlockEntity) {
+			Text text = Text.of("Enchant");
+			return new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) -> {
+			return new CursedEnchantmentScreenHandler(i, playerInventory, ScreenHandlerContext.create(world, pos));
+			}, text);
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
@@ -66,7 +79,7 @@ public class TableBlock extends Block implements BlockEntityProvider {
 
 		// (tut) You need a Block.createScreenHandlerFactory implementation that delegates to the block entity, such as the one from BlockWithEntity
 		player.openHandledScreen(blockState.createScreenHandlerFactory(world, blockPos));
-		return ActionResult.SUCCESS;
+		return ActionResult.CONSUME;
 		
 	}
 	

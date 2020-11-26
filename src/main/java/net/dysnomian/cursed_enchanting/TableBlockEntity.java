@@ -24,11 +24,11 @@ public class TableBlockEntity extends BlockEntity implements ImplementedInventor
    public static final Identifier ID = new Identifier("cursed_enchanting", "cursed_enchanting_table");
    public static final BlockEntityType<TableBlockEntity> BLOCK_ENTITY_TYPE = BlockEntityType.Builder
          .create(TableBlockEntity::new, TableBlock.INSTANCE).build(null);
-
-   private final DefaultedList<ItemStack> items = DefaultedList.ofSize(2, ItemStack.EMPTY);
+         
    private static final Random RANDOM = new Random();
+   private final DefaultedList<ItemStack> items = DefaultedList.ofSize(2, ItemStack.EMPTY);
 
-   public final boolean GO_FOR_FANCY = RANDOM.nextBoolean();
+   public final boolean GO_FOR_FANCY = RANDOM.nextBoolean() || RANDOM.nextBoolean(); // 75% chance
 
    public TableBlockEntity() {
       super(BLOCK_ENTITY_TYPE);
