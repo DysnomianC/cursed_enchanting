@@ -23,14 +23,17 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 
 public class TableBlock extends Block implements BlockEntityProvider {
-	//private static Identifier dropTableId = new Identifier("cursed_enchanting", "table_drop"); // .drops(dropTableId)
-	
 	// strength() sets blast resistance and hardness.
-	private static FabricBlockSettings SETTINGS = FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).sounds(BlockSoundGroup.STONE).strength(3.5f);
+	private static final int miningLevel = 0; // 0 - wood/gold
+	private static final FabricBlockSettings tableSettings = FabricBlockSettings.of(Material.STONE)
+		.breakByTool(FabricToolTags.PICKAXES, miningLevel)
+		.requiresTool()
+		.sounds(BlockSoundGroup.STONE)
+		.strength(3.5f);
 	private static final VoxelShape SHAPE = Block.createCuboidShape(0D, 0D, 0D, 16D, 12D, 16D);
-	
+		
 	public static final Identifier ID = new Identifier("cursed_enchanting", "cursed_enchanting_table");
-	public static final TableBlock INSTANCE = new TableBlock(SETTINGS);
+	public static final TableBlock INSTANCE = new TableBlock(tableSettings);
 	public static final BlockItem INSTANCE_ITEM = new BlockItem(TableBlock.INSTANCE, new Item.Settings().group(ItemGroup.DECORATIONS));
 
 	public TableBlock(FabricBlockSettings settings) {
