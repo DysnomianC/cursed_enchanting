@@ -20,6 +20,8 @@ import net.minecraft.util.math.MathHelper;
 
 public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEntity> {
 
+	public final static Identifier BOOK_SPRITE_ID = new Identifier("cursed_enchanting", "entity/cursed_enchanting_table_book");
+
 	private static ItemStack bookStack = new ItemStack(Items.BOOK, 1);
 
 	public TableBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
@@ -69,38 +71,37 @@ public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEnti
 	
 	private final BookModel book = new BookModel();
 
-	public static final SpriteIdentifier BOOK_TEXTURE;
+	public static final SpriteIdentifier BOOK_SPRITE;
 
 	// copied from minecraft's EnchantingTableBlockEntityRenderer
 	public void renderFancyBook(TableBlockEntity tableBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
-		  matrixStack.push();
-		  matrixStack.translate(0.5D, 0.75D, 0.5D);
-		  float g = (float)tableBlockEntity.ticks + f;
-		  matrixStack.translate(0.0D, (double)(0.1F + MathHelper.sin(g * 0.1F) * 0.01F), 0.0D);
-	
-		  float h;
-		  for(h = tableBlockEntity.nextAngularOffset - tableBlockEntity.angularOffset; h >= 3.1415927F; h -= 6.2831855F) {
-		  }
-	
-		  while(h < -3.1415927F) {
-			 h += 6.2831855F;
-		  }
-	
-		  float k = tableBlockEntity.angularOffset + h * f;
-		  matrixStack.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(-k));
-		  matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(80.0F));
-		  float l = MathHelper.lerp(f, tableBlockEntity.pageAngle, tableBlockEntity.nextPageAngle);
-		  float m = MathHelper.fractionalPart(l + 0.25F) * 1.6F - 0.3F;
-		  float n = MathHelper.fractionalPart(l + 0.75F) * 1.6F - 0.3F;
-		  float o = MathHelper.lerp(f, tableBlockEntity.pageTurningSpeed, tableBlockEntity.nextPageTurningSpeed);
-		  this.book.setPageAngles(g, MathHelper.clamp(m, 0.0F, 1.0F), MathHelper.clamp(n, 0.0F, 1.0F), o);
-		  VertexConsumer vertexConsumer = BOOK_TEXTURE.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntitySolid);
-		  this.book.method_24184(matrixStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, 1.0F);
-		  matrixStack.pop();
-	   }
-	
-	   static {
-		  BOOK_TEXTURE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("entity/enchanting_table_book"));
-		  // "cursed_enchanting:entity/cursed_enchanting_table_book" doesn't work *sadface*
-	   }
+		matrixStack.push();
+		matrixStack.translate(0.5D, 0.75D, 0.5D);
+		float g = (float)tableBlockEntity.ticks + f;
+		matrixStack.translate(0.0D, (double)(0.1F + MathHelper.sin(g * 0.1F) * 0.01F), 0.0D);
+
+		float h;
+		for(h = tableBlockEntity.nextAngularOffset - tableBlockEntity.angularOffset; h >= 3.1415927F; h -= 6.2831855F) {
+		}
+
+		while(h < -3.1415927F) {
+			h += 6.2831855F;
+		}
+
+		float k = tableBlockEntity.angularOffset + h * f;
+		matrixStack.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion(-k));
+		matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(80.0F));
+		float l = MathHelper.lerp(f, tableBlockEntity.pageAngle, tableBlockEntity.nextPageAngle);
+		float m = MathHelper.fractionalPart(l + 0.25F) * 1.6F - 0.3F;
+		float n = MathHelper.fractionalPart(l + 0.75F) * 1.6F - 0.3F;
+		float o = MathHelper.lerp(f, tableBlockEntity.pageTurningSpeed, tableBlockEntity.nextPageTurningSpeed);
+		this.book.setPageAngles(g, MathHelper.clamp(m, 0.0F, 1.0F), MathHelper.clamp(n, 0.0F, 1.0F), o);
+		VertexConsumer vertexConsumer = BOOK_SPRITE.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntitySolid);
+		this.book.method_24184(matrixStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, 1.0F);
+		matrixStack.pop();
+	}
+
+	static {
+		BOOK_SPRITE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, BOOK_SPRITE_ID);
+	}
 }
