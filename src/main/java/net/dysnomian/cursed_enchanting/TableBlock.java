@@ -63,53 +63,11 @@ public class TableBlock extends Block implements BlockEntityProvider {
 	@Override
 	public ActionResult onUse(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
 		if (world.isClient) return ActionResult.SUCCESS;
+
+		// (tut) You need a Block.createScreenHandlerFactory implementation that delegates to the block entity, such as the one from BlockWithEntity
+		player.openHandledScreen(blockState.createScreenHandlerFactory(world, blockPos));
+		return ActionResult.SUCCESS;
 		
-		BlockEntity blockEntity = world.getBlockEntity(blockPos);
-		if (!(blockEntity instanceof TableBlockEntity))
-		{
-			// handle this case?
-			System.err.println("BlockEntity for a `TableBlock` isn't a `TableBlockEntity`");
-		}
-		TableBlockEntity tableBlockEntity = (TableBlockEntity)blockEntity;
- 
- 
-        if (player.getStackInHand(hand).isEmpty()) {
-			// If the player is not holding anything we'll get give them the items in the block entity one by one
- 
-             // Find the first slot that has an item and give it to the player
-			 if (!tableBlockEntity.getStack(1).isEmpty()) {
-                // Give the player the stack in the inventory
-                player.inventory.offerOrDrop(world, tableBlockEntity.getStack(1));
-                // Remove the stack from the inventory
-                tableBlockEntity.removeStack(1);
-            } else if (!tableBlockEntity.getStack(0).isEmpty()) {
-                player.inventory.offerOrDrop(world, tableBlockEntity.getStack(0));
-                tableBlockEntity.removeStack(0);
-            } else {
-				// if the inventory is empty do the arm swinging animation
-				return ActionResult.SUCCESS;
-			}
-		}
-		else
-		{
-            // Check what is the first open slot and put an item from the player's hand there
-            if (tableBlockEntity.getStack(0).isEmpty()) {
-                // Put the stack the player is holding into the inventory
-                tableBlockEntity.setStack(0, player.getStackInHand(hand).copy());
-                // Remove the stack from the player's hand
-                player.getStackInHand(hand).setCount(0);
-            } else if (tableBlockEntity.getStack(1).isEmpty()) {
-                tableBlockEntity.setStack(1, player.getStackInHand(hand).copy());
-                player.getStackInHand(hand).setCount(0);
-            } else {
-                // If the inventory is full we play the arm swinging animation
-                return ActionResult.SUCCESS;
-            }
-		} 
-		
-		// make sure to mark as dirty after interacting with the inventory.
-		tableBlockEntity.markDirty();
-        return ActionResult.CONSUME;
 	}
 	
 }
