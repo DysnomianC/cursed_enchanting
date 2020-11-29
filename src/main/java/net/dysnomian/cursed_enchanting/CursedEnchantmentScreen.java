@@ -32,12 +32,12 @@ import net.minecraft.util.math.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class CursedEnchantmentScreen extends HandledScreen<CursedEnchantmentScreenHandler> {
-   private static final Identifier TEXTURE = new Identifier("cursed_enchanting", "gui/container/cursed_enchanting_table.png");
-   private static final Identifier BOOK_TEXTURE = new Identifier("cursed_enchanting", "entity/cursed_enchanting_table_book");
+   private static final Identifier TEXTURE = new Identifier("cursed_enchanting", "textures/gui/container/cursed_enchanting_table.png");
+   private static final Identifier BOOK_TEXTURE = new Identifier("cursed_enchanting", "textures/entity/cursed_enchanting_table_book.png");
    private static final BookModel BOOK_MODEL = new BookModel();
    private final Random random = new Random();
    public int ticks;
-   public float nextPageAngle;
+   public float nextPageAngle;e
    public float pageAngle;
    public float approximatePageAngle;
    public float pageRotationSpeed;
