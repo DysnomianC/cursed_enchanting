@@ -12,6 +12,10 @@ public class CursedEnchantingMain implements ModInitializer {
 		TableGuiDescription.ID,
 		(syncId, inventory) -> new TableGuiDescription(syncId, inventory, ScreenHandlerContext.EMPTY));
 
+	public static ScreenHandlerType<CursedEnchantmentScreenHandler> TABLE_SCREEN_HANDLER_TYPE_2 = ScreenHandlerRegistry.registerSimple(
+		CursedEnchantmentScreenHandler.ID,
+		(syncId, inventory) -> new CursedEnchantmentScreenHandler(syncId, inventory, ScreenHandlerContext.EMPTY));
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.

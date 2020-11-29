@@ -4,7 +4,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.screen.ScreenHandlerType;
 
 public class CursedEnchantingClient implements ClientModInitializer {
 	@Override
@@ -21,5 +23,22 @@ public class CursedEnchantingClient implements ClientModInitializer {
 		{
 			registry.register(TableBlockEntityRenderer.BOOK_SPRITE_ID);
 		});
+		
+		ScreenRegistry.<CursedEnchantmentScreenHandler, CursedEnchantmentScreen>register(
+			CursedEnchantingMain.TABLE_SCREEN_HANDLER_TYPE_2,
+			(gui, inventory, title) -> new CursedEnchantmentScreen(gui, inventory, title)
+		);
+
+		// ScreenRegistry.register(
+		// 	CursedEnchantingMain.TABLE_SCREEN_HANDLER_TYPE_2,
+		// 	CursedEnchantmentScreen::new
+		// );
+
+		// register(ScreenHandlerType.ENCHANTMENT, EnchantmentScreen::new);
+		// {
+		// 	ScreenHandlerType<? extends M> type = ScreenHandlerType.ENCHANTMENT;
+		// 	HandledScreens.Provider<M, U> provider = CursedEnchantmentScreen::new;
+		// 	HandledScreens.Provider<?, ?> provider2 = (HandledScreens.Provider)PROVIDERS.put(type, provider);
+		// }
     }	
 }
