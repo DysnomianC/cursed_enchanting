@@ -14,10 +14,10 @@ public class CursedEnchantingClient implements ClientModInitializer {
 		// Here we will put client-only registration code
 		BlockEntityRendererRegistry.INSTANCE.register(TableBlockEntity.BLOCK_ENTITY_TYPE, TableBlockEntityRenderer::new);
 
-		ScreenRegistry.<TableGuiDescription, TableBlockScreen>register(
-			CursedEnchantingMain.TABLE_SCREEN_HANDLER_TYPE,
-			(gui, inventory, title) -> new TableBlockScreen(gui, inventory.player, title)
-		);
+		// ScreenRegistry.<TableGuiDescription, TableBlockScreen>register(
+		// 	CursedEnchantingMain.TABLE_SCREEN_HANDLER_TYPE,
+		// 	(gui, inventory, title) -> new TableBlockScreen(gui, inventory.player, title)
+		// );
 
 		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) ->
 		{

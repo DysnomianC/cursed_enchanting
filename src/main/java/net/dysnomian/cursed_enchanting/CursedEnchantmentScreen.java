@@ -32,7 +32,7 @@ import net.minecraft.util.math.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class CursedEnchantmentScreen extends HandledScreen<CursedEnchantmentScreenHandler> {
-   private static final Identifier TEXTURE = new Identifier("textures/gui/container/enchanting_table.png");
+   private static final Identifier TEXTURE = new Identifier("cursed_enchanting", "gui/container/cursed_enchanting_table.png");
    private static final Identifier BOOK_TEXTURE = new Identifier("cursed_enchanting", "entity/cursed_enchanting_table_book");
    private static final BookModel BOOK_MODEL = new BookModel();
    private final Random random = new Random();
@@ -58,11 +58,11 @@ public class CursedEnchantmentScreen extends HandledScreen<CursedEnchantmentScre
       int i = (this.width - this.backgroundWidth) / 2;
       int j = (this.height - this.backgroundHeight) / 2;
 
-      for(int k = 0; k < 3; ++k) {
+      for(int boxIndex = 0; boxIndex < 3; ++boxIndex) {
          double d = mouseX - (double)(i + 60);
-         double e = mouseY - (double)(j + 14 + 19 * k);
-         if (d >= 0.0D && e >= 0.0D && d < 108.0D && e < 19.0D && ((CursedEnchantmentScreenHandler)this.handler).onButtonClick(this.client.player, k)) {
-            this.client.interactionManager.clickButton(((CursedEnchantmentScreenHandler)this.handler).syncId, k);
+         double e = mouseY - (double)(j + 14 + 19 * boxIndex);
+         if (d >= 0.0D && e >= 0.0D && d < 108.0D && e < 19.0D && ((CursedEnchantmentScreenHandler)this.handler).onButtonClick(this.client.player, boxIndex)) {
+            this.client.interactionManager.clickButton(((CursedEnchantmentScreenHandler)this.handler).syncId, boxIndex);
             return true;
          }
       }
@@ -134,7 +134,7 @@ public class CursedEnchantmentScreen extends HandledScreen<CursedEnchantmentScre
       DiffuseLighting.enableGuiDepthLighting();
       RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
       EnchantingPhrases.getInstance().setSeed((long)((CursedEnchantmentScreenHandler)this.handler).getSeed());
-      int n = ((CursedEnchantmentScreenHandler)this.handler).getLapisCount();
+      int n = ((CursedEnchantmentScreenHandler)this.handler).getRedstoneCount();
 
 		for(int o = 0; o < 3; ++o) {
 			int p = i + 60;
@@ -183,7 +183,7 @@ public class CursedEnchantmentScreen extends HandledScreen<CursedEnchantmentScre
 		super.render(matrices, mouseX, mouseY, delta);
 		this.drawMouseoverTooltip(matrices, mouseX, mouseY);
 		boolean bl = this.client.player.abilities.creativeMode;
-		int i = ((CursedEnchantmentScreenHandler)this.handler).getLapisCount();
+		int redstoneCount = ((CursedEnchantmentScreenHandler)this.handler).getRedstoneCount();
 
 		for(int j = 0; j < 3; ++j) {
 			int k = ((CursedEnchantmentScreenHandler)this.handler).enchantmentPower[j];
@@ -205,7 +205,7 @@ public class CursedEnchantmentScreen extends HandledScreen<CursedEnchantmentScre
 							mutableText2 = new TranslatableText("container.enchant.lapis.many", new Object[]{m});
 						}
 
-						list.add(mutableText2.formatted(i >= m ? Formatting.GRAY : Formatting.RED));
+						list.add(mutableText2.formatted(redstoneCount >= m ? Formatting.GRAY : Formatting.RED));
 						TranslatableText mutableText4;
 						if (m == 1) {
 							mutableText4 = new TranslatableText("container.enchant.level.one");

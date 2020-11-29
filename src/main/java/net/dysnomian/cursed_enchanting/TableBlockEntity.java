@@ -126,6 +126,7 @@ public class TableBlockEntity extends BlockEntity implements ImplementedInventor
 
    @Override
    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-      return new TableGuiDescription(syncId, inv, ScreenHandlerContext.create(world, pos));
+      return new CursedEnchantmentScreenHandler(syncId, inv, ScreenHandlerContext.create(world, pos));
+      //return new TableGuiDescription(syncId, inv, ScreenHandlerContext.create(world, pos));
    }
 }

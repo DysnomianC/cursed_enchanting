@@ -53,7 +53,7 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 	}
 
 	public CursedEnchantmentScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-		super(ScreenHandlerType.ENCHANTMENT, syncId);
+		super(CursedEnchantingMain.TABLE_SCREEN_HANDLER_TYPE_2, syncId);
 
 		this.context = context;
 		
@@ -242,7 +242,7 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 	}
 
 	@Environment(EnvType.CLIENT)
-	public int getLapisCount() {
+	public int getRedstoneCount() {
 		// Actually return redstone count but method signature is required to match use by `EnchantmentScreen`.
 		ItemStack itemStack = this.inventory.getStack(1);
 		return itemStack.isEmpty() ? 0 : itemStack.getCount();
@@ -279,7 +279,7 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 				if (!this.insertItem(itemStack2, 2, 38, true)) {
 				return ItemStack.EMPTY;
 				}
-			} else if (itemStack2.getItem() == Items.LAPIS_LAZULI) {
+			} else if (itemStack2.getItem() == Items.REDSTONE) {
 				if (!this.insertItem(itemStack2, 1, 2, true)) {
 				return ItemStack.EMPTY;
 				}

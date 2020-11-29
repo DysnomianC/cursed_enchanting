@@ -28,7 +28,7 @@ public class TableGuiDescription extends SyncedGuiDescription {
     public static final Identifier ID = new Identifier("cursed_enchanting", "cursed_enchanting_table");
 
     public TableGuiDescription(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-        super(CursedEnchantingMain.TABLE_SCREEN_HANDLER_TYPE, syncId, playerInventory, getBlockInventory(context, INVENTORY_SIZE), getBlockPropertyDelegate(context));
+        super(/*CursedEnchantingMain.TABLE_SCREEN_HANDLER_TYPE*/null, syncId, playerInventory, getBlockInventory(context, INVENTORY_SIZE), getBlockPropertyDelegate(context));
         
         this.context = context;
 
