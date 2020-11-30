@@ -7,12 +7,8 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.registry.Registry;
 
 public class CursedEnchantingMain implements ModInitializer {
-	
-	// public static ScreenHandlerType<TableGuiDescription> TABLE_SCREEN_HANDLER_TYPE = ScreenHandlerRegistry.registerSimple(
-	// 	TableGuiDescription.ID,
-	// 	(syncId, inventory) -> new TableGuiDescription(syncId, inventory, ScreenHandlerContext.EMPTY));
 
-	public static ScreenHandlerType<CursedEnchantmentScreenHandler> TABLE_SCREEN_HANDLER_TYPE_2 = ScreenHandlerRegistry.registerSimple(
+	public static ScreenHandlerType<CursedEnchantmentScreenHandler> CURSED_ENCHANTMENT_GUI = ScreenHandlerRegistry.registerSimple(
 		CursedEnchantmentScreenHandler.ID,
 		(syncId, inventory) -> new CursedEnchantmentScreenHandler(syncId, inventory, ScreenHandlerContext.EMPTY));
 

@@ -20,9 +20,12 @@ import net.minecraft.util.math.MathHelper;
 
 public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEntity> {
 
-	public final static Identifier BOOK_SPRITE_ID = new Identifier("cursed_enchanting", "entity/cursed_enchanting_table_book");
+	public static final Identifier BOOK_SPRITE_ID = new Identifier("cursed_enchanting", "entity/cursed_enchanting_table_book");
+	public static final SpriteIdentifier BOOK_SPRITE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, BOOK_SPRITE_ID);
 
 	private static ItemStack bookStack = new ItemStack(Items.BOOK, 1);
+	
+	private final BookModel book = new BookModel();
 
 	public TableBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
@@ -69,10 +72,6 @@ public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEnti
 		matrices.pop();
 	}
 	
-	private final BookModel book = new BookModel();
-
-	public static final SpriteIdentifier BOOK_SPRITE;
-
 	// copied from minecraft's EnchantingTableBlockEntityRenderer
 	public void renderFancyBook(TableBlockEntity tableBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
 		matrixStack.push();
@@ -99,9 +98,5 @@ public class TableBlockEntityRenderer extends BlockEntityRenderer<TableBlockEnti
 		VertexConsumer vertexConsumer = BOOK_SPRITE.getVertexConsumer(vertexConsumerProvider, RenderLayer::getEntitySolid);
 		this.book.method_24184(matrixStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, 1.0F);
 		matrixStack.pop();
-	}
-
-	static {
-		BOOK_SPRITE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, BOOK_SPRITE_ID);
 	}
 }

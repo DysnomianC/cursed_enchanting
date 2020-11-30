@@ -15,7 +15,6 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EquipmentSlot;
@@ -30,7 +29,7 @@ import net.minecraft.util.collection.WeightedPicker;
 import net.minecraft.util.registry.Registry;
 
 /** 
- * Wraps calls to EnchantmentHelper. Adds helpers for when cursing enchantments.
+ * Wraps calls to EnchantmentHelper. Adds helpers for when cursing enchantments. Can probably
 */
 public class CursedEnchantmentHelper {
 	/**
@@ -104,71 +103,68 @@ public class CursedEnchantmentHelper {
 		return EnchantmentHelper.getEquipmentLevel(enchantment, entity);
 	}
 
-
-	// TODO replace below with calls to EnchantmentHelper instead of `this`.
-
 	public static int getKnockback(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.KNOCKBACK, entity);
+		return EnchantmentHelper.getKnockback(entity);
 	}
 
 	public static int getFireAspect(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.FIRE_ASPECT, entity);
+		return EnchantmentHelper.getFireAspect(entity);
 	}
 
 	public static int getRespiration(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.RESPIRATION, entity);
+		return EnchantmentHelper.getRespiration(entity);
 	}
 
 	public static int getDepthStrider(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.DEPTH_STRIDER, entity);
+		return EnchantmentHelper.getDepthStrider(entity);
 	}
 
 	public static int getEfficiency(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.EFFICIENCY, entity);
+		return EnchantmentHelper.getEfficiency(entity);
 	}
 
 	public static int getLuckOfTheSea(ItemStack stack) {
-		return getLevel(Enchantments.LUCK_OF_THE_SEA, stack);
+		return EnchantmentHelper.getLuckOfTheSea(stack);
 	}
 
 	public static int getLure(ItemStack stack) {
-		return getLevel(Enchantments.LURE, stack);
+		return EnchantmentHelper.getLure(stack);
 	}
 
 	public static int getLooting(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.LOOTING, entity);
+		return EnchantmentHelper.getLooting(entity);
 	}
 
 	public static boolean hasAquaAffinity(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.AQUA_AFFINITY, entity) > 0;
+		return EnchantmentHelper.hasAquaAffinity(entity);
 	}
 
 	public static boolean hasFrostWalker(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.FROST_WALKER, entity) > 0;
+		return EnchantmentHelper.hasFrostWalker(entity);
 	}
 
 	public static boolean hasSoulSpeed(LivingEntity entity) {
-		return getEquipmentLevel(Enchantments.SOUL_SPEED, entity) > 0;
+		return EnchantmentHelper.hasSoulSpeed(entity);
 	}
 
 	public static boolean hasBindingCurse(ItemStack stack) {
-		return getLevel(Enchantments.BINDING_CURSE, stack) > 0;
+		return EnchantmentHelper.hasBindingCurse(stack);
 	}
 
 	public static boolean hasVanishingCurse(ItemStack stack) {
-		return getLevel(Enchantments.VANISHING_CURSE, stack) > 0;
+		return EnchantmentHelper.hasVanishingCurse(stack);
 	}
 
 	public static int getLoyalty(ItemStack stack) {
-		return getLevel(Enchantments.LOYALTY, stack);
+		return EnchantmentHelper.getLoyalty(stack);
 	}
 
 	public static int getRiptide(ItemStack stack) {
-		return getLevel(Enchantments.RIPTIDE, stack);
+		return EnchantmentHelper.getRiptide(stack);
 	}
 
 	public static boolean hasChanneling(ItemStack stack) {
-		return getLevel(Enchantments.CHANNELING, stack) > 0;
+		return EnchantmentHelper.hasChanneling(stack);
 	}
 
 	/**

@@ -3,14 +3,10 @@ package net.dysnomian.cursed_enchanting;
 import java.util.List;
 import java.util.Random;
 
-import com.google.common.collect.Lists;
-
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvType;
 
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.EnchantingTableBlock;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,22 +14,18 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 public class CursedEnchantmentScreenHandler extends ScreenHandler {
 	private static final int TOOL_SLOT_INDEX = 0;
@@ -57,7 +49,7 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 	}
 
 	public CursedEnchantmentScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-		super(CursedEnchantingMain.TABLE_SCREEN_HANDLER_TYPE_2, syncId);
+		super(CursedEnchantingMain.CURSED_ENCHANTMENT_GUI, syncId);
 
 		this.context = context;
 		

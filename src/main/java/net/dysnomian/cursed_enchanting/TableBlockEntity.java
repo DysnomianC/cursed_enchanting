@@ -7,8 +7,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
@@ -17,16 +15,14 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
 
-public class TableBlockEntity extends BlockEntity implements ImplementedInventory, NamedScreenHandlerFactory, Tickable {
+public class TableBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, Tickable {
    public static final Identifier ID = new Identifier("cursed_enchanting", "cursed_enchanting_table");
    public static final BlockEntityType<TableBlockEntity> BLOCK_ENTITY_TYPE = BlockEntityType.Builder
          .create(TableBlockEntity::new, TableBlock.INSTANCE).build(null);
          
    private static final Random RANDOM = new Random();
-   private final DefaultedList<ItemStack> items = DefaultedList.ofSize(2, ItemStack.EMPTY);
 
    public final boolean GO_FOR_FANCY = RANDOM.nextBoolean() || RANDOM.nextBoolean(); // 75% chance
 
@@ -102,20 +98,13 @@ public class TableBlockEntity extends BlockEntity implements ImplementedInventor
    }
 
    @Override
-   public DefaultedList<ItemStack> getItems() {
-      return items;
-   }
-
-   @Override
    public void fromTag(BlockState state, CompoundTag tag) {
       super.fromTag(state, tag);
-      Inventories.fromTag(tag, items);
    }
 
    @Override
    public CompoundTag toTag(CompoundTag tag) {
       super.toTag(tag);
-      Inventories.toTag(tag, items);
       return tag;
    }
 
@@ -127,6 +116,5 @@ public class TableBlockEntity extends BlockEntity implements ImplementedInventor
    @Override
    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
       return new CursedEnchantmentScreenHandler(syncId, inv, ScreenHandlerContext.create(world, pos));
-      //return new TableGuiDescription(syncId, inv, ScreenHandlerContext.create(world, pos));
    }
 }
