@@ -3,19 +3,22 @@ package net.dysnomian.cursed_enchanting;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
+
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvType;
 
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.EnchantingTableBlock;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.EnchantedBookItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -30,6 +33,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
 public class CursedEnchantmentScreenHandler extends ScreenHandler {
 	private static final int TOOL_SLOT_INDEX = 0;
@@ -105,62 +109,30 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 			ItemStack itemStack = inventory.getStack(0);
 			if (!itemStack.isEmpty() && itemStack.isEnchantable()) {
 			   this.context.run((world, blockPos) -> {
-				  int bookshelfCount = 0;
-   
-				  int slotIndex;
-				  for(slotIndex = -1; slotIndex <= 1; ++slotIndex) {
-					 for(int k = -1; k <= 1; ++k) {
-						if ((slotIndex != 0 || k != 0) && world.isAir(blockPos.add(k, 0, slotIndex)) && world.isAir(blockPos.add(k, 1, slotIndex))) {
-						   if (world.getBlockState(blockPos.add(k * 2, 0, slotIndex * 2)).isOf(Blocks.BOOKSHELF)) {
-							  ++bookshelfCount;
-						   }
-   
-						   if (world.getBlockState(blockPos.add(k * 2, 1, slotIndex * 2)).isOf(Blocks.BOOKSHELF)) {
-							  ++bookshelfCount;
-						   }
-   
-						   if (k != 0 && slotIndex != 0) {
-							  if (world.getBlockState(blockPos.add(k * 2, 0, slotIndex)).isOf(Blocks.BOOKSHELF)) {
-								 ++bookshelfCount;
-							  }
-   
-							  if (world.getBlockState(blockPos.add(k * 2, 1, slotIndex)).isOf(Blocks.BOOKSHELF)) {
-								 ++bookshelfCount;
-							  }
-   
-							  if (world.getBlockState(blockPos.add(k, 0, slotIndex * 2)).isOf(Blocks.BOOKSHELF)) {
-								 ++bookshelfCount;
-							  }
-   
-							  if (world.getBlockState(blockPos.add(k, 1, slotIndex * 2)).isOf(Blocks.BOOKSHELF)) {
-								 ++bookshelfCount;
-							  }
-						   }
-						}
-					 }
-				  }
-   
-				  this.random.setSeed((long)this.seed.get());
-   
-				  for(slotIndex = 0; slotIndex < 3; ++slotIndex) {
-					this.enchantmentPower[slotIndex] = EnchantmentHelper.calculateRequiredExperienceLevel(this.random, slotIndex, bookshelfCount, itemStack);
-					this.enchantmentId[slotIndex] = -1;
-					this.enchantmentLevel[slotIndex] = -1;
-					if (this.enchantmentPower[slotIndex] < slotIndex + 1) {
-						this.enchantmentPower[slotIndex] = 0;
-					}
-				}
-   
-				  for(slotIndex = 0; slotIndex < 3; ++slotIndex) {
-					if (this.enchantmentPower[slotIndex] > 0) {
-						List<EnchantmentLevelEntry> list = this.generateEnchantments(itemStack, slotIndex, this.enchantmentPower[slotIndex]);
-						if (list != null && !list.isEmpty()) {
-							EnchantmentLevelEntry enchantmentLevelEntry = (EnchantmentLevelEntry)list.get(this.random.nextInt(list.size()));
-							this.enchantmentId[slotIndex] = net.minecraft.util.registry.Registry.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
-							this.enchantmentLevel[slotIndex] = enchantmentLevelEntry.level;
+
+					int pretnedBookshelfCount = 8; // number chosen after a bit of testing.
+				   
+					this.random.setSeed((long)this.seed.get());
+					int slotIndex;
+					for(slotIndex = 0; slotIndex < 3; ++slotIndex) {
+						this.enchantmentPower[slotIndex] = CursedEnchantmentHelper.calculateRequiredExperienceLevel(this.random, slotIndex, pretnedBookshelfCount, itemStack);
+						this.enchantmentId[slotIndex] = -1;
+						this.enchantmentLevel[slotIndex] = -1;
+						if (this.enchantmentPower[slotIndex] < slotIndex + 1) {
+							this.enchantmentPower[slotIndex] = 0;
 						}
 					}
-				  }
+   
+					for(slotIndex = 0; slotIndex < 3; ++slotIndex) {
+						if (this.enchantmentPower[slotIndex] > 0) {
+							List<EnchantmentLevelEntry> list = this.generateEnchantments(itemStack, slotIndex, this.enchantmentPower[slotIndex]);
+							if (list != null && !list.isEmpty()) {
+								EnchantmentLevelEntry enchantmentLevelEntry = (EnchantmentLevelEntry)list.get(this.random.nextInt(list.size()));
+								this.enchantmentId[slotIndex] = net.minecraft.util.registry.Registry.ENCHANTMENT.getRawId(enchantmentLevelEntry.enchantment);
+								this.enchantmentLevel[slotIndex] = enchantmentLevelEntry.level;
+							}
+						}
+					}
    
 				  this.sendContentUpdates();
 			   });
@@ -187,7 +159,13 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 				ItemStack enchantedTool = toolToEnchant;
 				List<EnchantmentLevelEntry> enchantments = this.generateEnchantments(toolToEnchant, buttonId, this.enchantmentPower[buttonId]);
 				if (!enchantments.isEmpty()) {
-					player.applyEnchantmentCosts(toolToEnchant, slotNum);
+					// instead of costing levels, we cost the player health.
+					//player.applyEnchantmentCosts(toolToEnchant, slotNum);
+					int damage_amount = slotNum * 2;
+					DamageSource damage_source = DamageSource.MAGIC; // TODO add custom damage source with specific death message.
+					player.damage(damage_source, damage_amount);
+					
+
 					boolean bl = toolToEnchant.getItem() == Items.BOOK;
 					if (bl) {
 						enchantedTool = new ItemStack(Items.ENCHANTED_BOOK);
@@ -233,7 +211,7 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 	
 	private List<EnchantmentLevelEntry> generateEnchantments(ItemStack stack, int slot, int level) {
 		this.random.setSeed((long)(this.seed.get() + slot));
-		List<EnchantmentLevelEntry> list = EnchantmentHelper.generateEnchantments(this.random, stack, level, false);
+		List<EnchantmentLevelEntry> list = CursedEnchantmentHelper.generateEnchantments(this.random, stack, level, false);
 		if (stack.getItem() == Items.BOOK && list.size() > 1) {
 		   list.remove(this.random.nextInt(list.size()));
 		}
