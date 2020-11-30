@@ -37,7 +37,7 @@ public class CursedEnchantmentScreen extends HandledScreen<CursedEnchantmentScre
    private static final BookModel BOOK_MODEL = new BookModel();
    private final Random random = new Random();
    public int ticks;
-   public float nextPageAngle;e
+   public float nextPageAngle;
    public float pageAngle;
    public float approximatePageAngle;
    public float pageRotationSpeed;
