@@ -150,9 +150,12 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 		ItemStack toolToEnchant = this.inventory.getStack(0);
 		ItemStack redstoneStack = this.inventory.getStack(1);
 		int slotNum = buttonId + 1;
+		int damage_amount = slotNum * 2;
 		if ((redstoneStack.isEmpty() || redstoneStack.getCount() < slotNum) && !player.abilities.creativeMode) {
 			return false;
 		} else if (this.enchantmentPower[buttonId] <= 0 || toolToEnchant.isEmpty() || (player.experienceLevel < slotNum || player.experienceLevel < this.enchantmentPower[buttonId]) && !player.abilities.creativeMode) {
+			return false;
+		} else if ((player.getHealth() <= damage_amount + 0.001f) && !player.abilities.creativeMode) {
 			return false;
 		} else {
 			this.context.run((world, blockPos) -> {
@@ -160,12 +163,9 @@ public class CursedEnchantmentScreenHandler extends ScreenHandler {
 				List<EnchantmentLevelEntry> enchantments = this.generateEnchantments(toolToEnchant, buttonId, this.enchantmentPower[buttonId]);
 				if (!enchantments.isEmpty()) {
 					// instead of costing levels, we cost the player health.
-					//player.applyEnchantmentCosts(toolToEnchant, slotNum);
-					int damage_amount = slotNum * 2;
 					DamageSource damage_source = DamageSource.MAGIC; // TODO add custom damage source with specific death message.
 					player.damage(damage_source, damage_amount);
 					
-
 					boolean bl = toolToEnchant.getItem() == Items.BOOK;
 					if (bl) {
 						enchantedTool = new ItemStack(Items.ENCHANTED_BOOK);
